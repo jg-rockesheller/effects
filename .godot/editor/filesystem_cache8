@@ -1,0 +1,10 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1727471158
+default_env.tres::Environment::-1::1727471130::0::1::::<><>::
+icon.png::CompressedTexture2D::840271218313557393::1727470852::1727471160::1::::<><>::
+Knight.tscn::PackedScene::-1::1727471130::0::1::::<><>::res://images/crusader_idle_10013.png
+ParticleExample.tscn::PackedScene::-1::1727471130::0::1::::<><>::
+Rocket.tscn::PackedScene::-1::1727471130::0::1::::<><>::res://images/spaceRockets_002.png
+::res://images/::1727470852
+crusader_idle_10013.png::CompressedTexture2D::121134189806633935::1727470852::1727471160::1::::<><>::
+spaceRockets_002.png::CompressedTexture2D::4489523331625334884::1727470852::1727471160::1::::<><>::
