@@ -1,20 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://drvwvjq8r5sv5"]
+[gd_scene load_steps=5 format=3 uid="uid://drvwvjq8r5sv5"]
 
 [ext_resource type="Texture2D" uid="uid://b47018dusyqs7" path="res://images/spaceRockets_002.png" id="1"]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v51bj"]
-particle_flag_disable_z = true
-gravity = Vector3(0, 98, 0)
+[sub_resource type="Curve" id="Curve_a7jyx"]
+min_value = -5.0
+max_value = 5.0
+_data = [Vector2(0, -0.032967), 0.0, 0.0, 0, 0, Vector2(0.303371, 2.8022), 0.0, 0.0, 0, 0, Vector2(0.623595, -1.04396), 0.0, 0.0, 0, 0, Vector2(1, -0.054945), 0.0, 0.0, 0, 0]
+point_count = 4
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_tekpo"]
+[sub_resource type="Curve" id="Curve_x2788"]
+max_value = 1.5
+_data = [Vector2(0, 0.563187), 0.0, 0.0, 0, 0, Vector2(0.404494, 1.5), 0.0, 0.0, 0, 0, Vector2(0.550562, 1.03846), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_73hnm"]
+offsets = PackedFloat32Array(0, 0.346667, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.862817, 0.720284, 0.203895, 1, 0.821055, 0.254999, 0, 0)
 
 [node name="Rocket" type="Sprite2D"]
+z_index = 1
 texture = ExtResource("1")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-texture_filter = 1
-position = Vector2(0, 156)
-amount = 100
-process_material = SubResource("ParticleProcessMaterial_v51bj")
-texture = SubResource("CanvasTexture_tekpo")
-lifetime = 3.0
+[node name="PropelParticles" type="CPUParticles2D" parent="."]
+z_index = -1
+position = Vector2(0, 158)
+amount = 250
+lifetime = 1.75
+randomness = 0.3
+lifetime_randomness = 0.25
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+angular_velocity_min = -50.0
+angular_velocity_max = 50.0
+orbit_velocity_min = -0.05
+orbit_velocity_max = 0.05
+orbit_velocity_curve = SubResource("Curve_a7jyx")
+radial_accel_min = -50.51
+radial_accel_max = 4.25
+tangential_accel_min = -66.67
+tangential_accel_max = 38.38
+scale_amount_min = 0.0
+scale_amount_max = 36.7
+scale_amount_curve = SubResource("Curve_x2788")
+color_ramp = SubResource("Gradient_73hnm")
