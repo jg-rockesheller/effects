@@ -1,6 +1,228 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6jl63hsmaj0c"]
+[gd_scene load_steps=11 format=3 uid="uid://b6jl63hsmaj0c"]
 
 [ext_resource type="Texture2D" uid="uid://byxcee5krn24" path="res://images/crusader_idle_10013.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://slj2q7o4di64" path="res://6Tp5Xpenc.png" id="2_aroi0"]
+[ext_resource type="Texture2D" uid="uid://clh4to8qhj21e" path="res://shield-white-hi.png" id="3_ulxl8"]
+
+[sub_resource type="Animation" id="Animation_dso20"]
+resource_name = "Heal"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CrossParticle:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollectParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_jx7id"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CrossParticle:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollectParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../ShieldEffect/CrossParticle:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../ShieldEffect/CollectParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_5437i"]
+resource_name = "Shield"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ShieldEffect/CrossParticle:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../ShieldEffect/CollectParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g56gp"]
+_data = {
+"Heal": SubResource("Animation_dso20"),
+"RESET": SubResource("Animation_jx7id"),
+"Shield": SubResource("Animation_5437i")
+}
+
+[sub_resource type="Curve" id="Curve_o76j6"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.44382, 200), 0.0, 0.0, 0, 0, Vector2(1, 200), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_hvj3y"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.331461, 100), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_hq513"]
+offsets = PackedFloat32Array(0, 0.1, 0.56, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.505882, 1, 1, 1, 0.505882, 1, 1, 1, 0)
 
 [node name="Knight" type="Sprite2D"]
 texture = ExtResource("1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../HealEffect")
+libraries = {
+"": SubResource("AnimationLibrary_g56gp")
+}
+
+[node name="HealEffect" type="Node2D" parent="."]
+
+[node name="CrossParticle" type="CPUParticles2D" parent="HealEffect"]
+emitting = false
+amount = 1
+lifetime = 3.0
+one_shot = true
+texture = ExtResource("2_aroi0")
+gravity = Vector2(0, -980)
+linear_accel_min = 5.0
+linear_accel_max = 5.0
+linear_accel_curve = SubResource("Curve_o76j6")
+damping_min = 25.0
+damping_max = 25.0
+damping_curve = SubResource("Curve_hvj3y")
+scale_amount_min = 0.15
+scale_amount_max = 0.15
+color = Color(3.27289e-06, 0.805034, 0.21729, 1)
+color_ramp = SubResource("Gradient_hq513")
+
+[node name="CollectParticles" type="CPUParticles2D" parent="HealEffect"]
+scale = Vector2(300, 300)
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.9
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector2(0, -1)
+angular_velocity_min = -500.0
+angular_velocity_max = 500.0
+orbit_velocity_min = -0.05
+orbit_velocity_max = 0.05
+radial_accel_min = -75.0
+radial_accel_max = -70.0
+damping_max = 50.0
+scale_amount_min = 2.0
+scale_amount_max = 15.0
+color = Color(0, 0.803922, 0.215686, 1)
+color_ramp = SubResource("Gradient_hq513")
+
+[node name="ShieldEffect" type="Node2D" parent="."]
+
+[node name="CrossParticle" type="CPUParticles2D" parent="ShieldEffect"]
+emitting = false
+amount = 1
+lifetime = 3.0
+one_shot = true
+texture = ExtResource("3_ulxl8")
+gravity = Vector2(0, -980)
+linear_accel_min = 5.0
+linear_accel_max = 5.0
+linear_accel_curve = SubResource("Curve_o76j6")
+damping_min = 25.0
+damping_max = 25.0
+damping_curve = SubResource("Curve_hvj3y")
+scale_amount_min = 0.25
+scale_amount_max = 0.25
+color = Color(0, 0.541176, 0.788235, 1)
+color_ramp = SubResource("Gradient_hq513")
+
+[node name="CollectParticles" type="CPUParticles2D" parent="ShieldEffect"]
+scale = Vector2(300, 300)
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.9
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 0.1
+gravity = Vector2(0, -1)
+angular_velocity_min = -500.0
+angular_velocity_max = 500.0
+orbit_velocity_min = -0.05
+orbit_velocity_max = 0.05
+radial_accel_min = 150.0
+radial_accel_max = 150.0
+scale_amount_min = 2.0
+scale_amount_max = 15.0
+color = Color(2.79158e-06, 0.540741, 0.789306, 1)
+color_ramp = SubResource("Gradient_hq513")
